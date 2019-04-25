@@ -1,0 +1,418 @@
+import random
+
+# SECTION 1.1: Introduction to the PvC | Function firstAttdeterminator()
+            
+def firstAttdeterminator():
+    "Determines the first one who attacks."
+    print("""
+
+    __Welcome to the Arena!__
+---------------------------------------
+
+Player will be dueling using what they have in a one-on-one battle.
+
+Whoever drops to 0 first on their health will lose the game. Let's get setup.
+-----------------------------------------------------------------------------------------------
+""")
+    print("""|Player please choose a number between 1 and 100. |
+-----------------------------------------------------------------
+""")
+    for x in range(1):
+        global renem
+        renem=random.randint(1,1) # MODIFIED TO FIX ISSUE
+        while True:
+            global rplayer
+            rplayer=int(input())
+            if rplayer > 100:
+                False(failRoll())
+                print("""
+That's above the Maximum number. Please try again. Choose a number between {1 and 100}
+""")
+            elif rplayer == renem: # MODIFIED
+                True(Retry()) # MODIFIED
+                
+            elif rplayer < 100:
+                print("""
+Player=""",rplayer,"""Opponent=""",renem)
+                
+            if rplayer > renem:
+                print("""
+Player has won. Choose your first Option.
+""")
+                break
+            elif rplayer < renem:
+                print("Opponent has won! They will now attack you!")
+                print()
+                break
+
+
+# SECTION 1.1.0: Introduction to the PvC | Function RollsEqual() | Failsafe | Attribute to firstAttdeterminator()
+
+def RollsEqual():
+    "When both the Opponent and the Player Choose the same Number this will force them to roll again until both numbers are not the same."
+    while True:  
+        if rplayer == renem: # If both the Player's and Opponent's rolls are equal, this will trigger the Failsafe Functions. This is True and continues the loop.
+            False
+            print("You and your Opponent have chosen the same number. You will not be choosing again. If this happens again, this will repeat.")
+            print()
+            Retry()
+        if rplayer > renem: # If Player roll is higher then the Opponent's, it will not trigger the Failsafe Functions. This is False and breaks the loop.
+            True
+            break
+        elif rplayer < renem: # If Player roll is lower then the Opponent's, it will not trigger the Failsafe Function. This is False and breaks the loop.
+            True
+            break
+# SECTION 1.1.1: Introduction to the PvC | Function Retry() | Failsafe | Attribute to firstAttdeterminator()
+
+def Retry():
+    "Executes another re-roll of the chosen numbers that Equal Automatically without allowing the Player to choose another number to quicken the Battle and Escape Room."
+    print("""
+Re-Rolling Player and Opponent Scores...""")
+    print()
+    for x in range(1):
+        rplayer=int(input())
+        renem=random.randint(1,100)
+        while True:
+            if rplayer < 100:
+                print("""
+Player=""",rplayer,"""Opponent=""",renem)
+            elif rplayer > renem:
+                print("""
+Player has won. Choose your first Option.
+""")
+                print()
+                break
+            elif rplayer < renem:
+                print("Opponent has won! They will now attack you!")
+                print()
+                break
+
+# SECTION 1.1.2: Introduction to the PvC | Function failRoll() | Failsafe | Attribute to firstAttdeterminator()
+
+def failRoll():
+    "If 'firstAttdeterminator' int(input()) > 100 fails the function and restarts."
+    while True:
+        if rplayer > 100:
+            print("""
+That's above the Maximum number. Please try again. Choose a number between {1 and 100}
+""")
+            firstAttdeterminator()
+            break
+        elif rplayer <= 0:
+            print("""
+That's below the Minimum number. Please try again.
+""")
+            firstAttdeterminator()
+            break
+            
+# SECTION 2.1: BattleField Setup Configurations - playerHP()
+
+def playerHP():
+    "Player Health Points."
+
+    global gplayerHP
+    gplayerHP=100
+    print("Player's HP,",gplayerHP)
+
+# SECTION 2.2: BattleField Setup Configurations - aiHP()
+
+def aiHP():
+    "Enemy Health Points."
+
+    global gaiHP
+    gaiHP=100
+    print("Opponents HP," ,gaiHP)
+
+# SECTION 2.3: BattleField Setup Configurations - Health()
+
+def Health():
+    "A function for Both the Opponent's and Player's health scores to be displayed each round of attacks."
+
+    print("""Player Health:""", gplayerHP, """Opponent Health:""",gaiHP)
+
+
+# SECTION 3.1: Opponent Attack Configurations - aiATTCK()
+
+def aiATTCK():
+    "Enemy Attack Function. Removing Player's HP."
+    print("Enemy Attacks!")
+    global gplayerHP
+    for x in range (1, 4):
+        attdmg=random.randint (1, 8)
+        bonusdmg=random.randint (1, 4)
+        dealDMG=attdmg+bonusdmg
+        gplayerHP=gplayerHP-dealDMG
+    print("Attack Damage Dealt to Player =",dealDMG, "HP dealt with a Normal Attack.")
+    print()
+    Health()
+
+# SECTION 3.2: Opponent Attack Configurations - aiAtt2()
+
+def aiAtt2():
+    "Enemy Attack Function. Removes HP from the Player."
+    global gplayerHP
+    mAttack=random.randint(4, 15)
+    print("Enemy Attacks!")
+    print("Attack Damage Dealt to Player =", mAttack, "HP dealt.")
+    gplayerHP=gplayerHP-mAttack
+    print()
+
+# SECTION 3.3: Opponent Attack Configurations - aiATTrandom()
+
+def aiATTrandom():
+    "Opponent Attacks the player Randomly between attacks."
+    randomAtt=random.choice([aiATTCK(), aiAtt2()])
+    print()
+    Health()
+    
+
+#SECTION 4.1: Player Attack Configurations - playerATTCK()
+
+def playerATTCK():
+    "Player Attack Function. Removes HP from the Enemy."
+    print("The Player is now Attacking!")
+    global gaiHP
+    for x in range (1, 4):
+        pattdmg=random.randint (1, 8)
+        pbonusdmg=random.randint (1, 4)
+        pdeal=pattdmg+pbonusdmg
+    
+        print("Attack Damage Dealt to Opponent =",pdeal,"HP dealt with a Normal Attack.")
+        gaiHP=-pdeal
+        print()
+        Health()
+
+# SECTION 4.2: Player Attack Configurations - playerAttHARD()
+
+def playerAttHARD():
+    "Player's Striking Attack."
+    print("The Player is now Attacking!")
+    global gaiHP
+    for x in range (1, 17):
+        strike1=random.randint (1, 20)
+        strike2=random.randint (2, 8)
+        totality=strike1+strike2
+        print("Attack Damage Dealt to Opponent =",totality,"HP dealt with a Hard Attack.")
+        gaiH=gaiHP-totality
+        print()
+        Health()
+
+# SECTION 4.3: Player Attack Configurations - playerCONatt()
+
+def playerCONatt():
+    "Player's Conservative attack."
+    print("The Player is now Attacking!")
+    global gaiHP
+    if gplayerOPTs is 2:
+        for x in range(1, 6):
+
+            con1=random.randint (1, 6)
+            con2=random.randint (1, 6)
+            con3=random.randint (1, 6)
+            con4=random.randint (1, 6)
+            con5=random.randint (1, 6)
+            ttl=con1+con2+con3+con4+con5
+            gaiHP=gaiHP-ttl
+            print("Attack Damage Dealt to Opponent =",ttl,"HP dealt with a Conservative Attack.")
+            
+            print()
+            Health()
+
+# SECTION 4.4: Player Options Configurations - playerOPTsflee()
+
+def playerOPTsflee():
+    "Player Options ACTION_Protocal_flee"
+    
+    print("The Player is Attempting to Flee.")
+    if gplayerOPTs is 1:
+        for x in range (1):
+            
+            pro=random.randint (1,20)
+            bpro=random.randint (0, 3)
+            gpttl=pro+bpro
+            print()
+            
+            if gpttl>13: # If the Dexterity Check is higher than 13, the player succeeds fleeing and will potentially run into a different room.
+                print("Your Dexterity Check,",gpttl,". You've successfully fleed from the battle.")
+                print()
+                # NEEDS EXPLANATION
+            elif gpttl<13: # If the Dexterity Check is lower than 13, the player fails fleeing and will be dealt damage by the Enemy.
+                print("Your Dexterity Check",gpttl,"You've failed to flee!")
+                print()
+                print("The Opponent has the Opportunity to Attack you. You won't be able to attack this turn.")
+
+# SECTION 4.5: Player Options Configurations - playerOptions()
+
+def playerOptions():
+    """Player options that consists of:
+> Fleeing
+> Conservative Attacks
+> Hard Attacks"""
+    global gplayerOPTs
+    while True:
+        print("""
+Player's Turn!""")
+        print("""Please Choose an Option:
+-----------------------------------------------
+> 1. Fleeing
+> 2. Conservative Attacks
+> 3. Hard Attacks
+> 4. Normal Attack + bonus
+""")
+        gplayerOPTs=int(input())
+        if gplayerOPTs is 1:
+            playerOPTsflee()
+            
+            break
+
+        elif gplayerOPTs is 2:
+            playerCONatt()
+            aiATTrandom()
+            break
+
+        elif gplayerOPTs is 3:
+            playerAttHARD()
+            aiATTrandom()
+            break
+        elif gplayerOPTs is 4:
+            playerATTCK()
+            aiATTrandom()
+            break
+
+# SECTION 5.1: Game Condition | Win/Lose Conditions - wlDeterminator()
+
+def wlDeterminator():
+    "Determines whether or not the Player wins by winning against the opponent lowering them to 0 HP or vice versa."
+    while True:
+        
+        if gplayerHP <= 0:
+            print("Player HP=",gplayerHP,". Player has been defeated! Player's opponent wins the game! Congratulations Opponent! Opponent's HP=",gaiHP)
+            break
+            exec(HealthCondition())
+        elif gplayerHP == 0 or gplayerHP < 0:
+            print("Player HP=",gplayerHP,". Player has been defeated! Player's opponent wins the game! Congratulations Opponent! Opponent's HP=",gaiHP)
+            exec(HealthCondition())
+        
+        elif gaiHP <= 0:
+            print("Opponent HP=",gaiHP,". Opponent has been defeated by Player! Player WINS the game! Congratulations Player! Player's HP=",gplayerHP)
+            break
+            exec(HealthCondition())
+        
+        elif gaiHP == 0 or gaiHP < 0:
+            print("Opponent HP=",gaiHP,". Opponent has been defeated by Player! Player WINS the game! Congratulations Player! Player's HP=",gplayerHP)
+            break
+            exec(HealthCondition())
+
+# SECTION 5.1.1: Game Condition | Win/Lose Conditions *SIMPLIFIED* |    |- Attributes to wlDeterminator()
+
+@staticmethod
+def HealthCondition():
+    "A simplified Alternative for wlDeterminator(). Whenever the Opponent's or Player's Health has been reduced to 0 or below, the wlDeterminator() and HealthCondition() functions will execute."
+
+    if gaiHP <= 0:
+        print("Opponent HP=",gaiHP,". Opponent has been defeated by Player! Player WINS the game! Congratulations Player! Player's HP=",gplayerHP)    
+    elif gplayerHP <= 0:
+        print("Player HP=",gplayerHP,". Player has been defeated! Player's opponent wins the game! Congratulations Opponent! Opponent's HP=",gaiHP)
+
+# SECTION 5.2: Game Condition | Determines Player's or Opponent's First Turn to Attack - FirstStrike() 
+
+def FirstStrike():
+    "Determines whether or not the Player or Opponent may strike first/next."
+    while True:
+        if gplayerHP < 100: 
+            playerOptions()
+            break
+        
+        elif gplayerHP is 100:
+            randomAtt=random.choice([aiATTCK(), aiAtt2()])
+            break
+        
+        elif gaiHP < 100:
+            randomAtt=random.choice([aiATTCK(), aiAtt2()])
+            break
+        
+        elif gaiHP is 100:
+            playerOptions()
+            break
+
+
+# SECTION 6.1: Game Stability | Continues battle until Winning conditions are met - CombatPattern()
+
+def CombatPattern():
+    "Assures Combat pattern is continuous until stopped."
+    FirstStrike()
+    playerOptions()
+    aiATTrandom()
+    wlDeterminator()
+    playerOptions()
+    aiATTrandom()
+    wlDeterminator()
+# SECTION 6.2: Game Stability | Continues battle until Winning conditions are met - CombatPatternB()
+
+def CombatPatternB():
+    "Assures Combat Pattern is continuous and fair until Interactive is disrupted by error or end requirements are met."
+    FirstStrike()
+    aiATTrandom()
+    playerOptions()
+    wlDeterminator()
+    aiATTrandom()
+    playerOptions()
+    wlDeterminator()
+
+# SECTION 7.1: Game Logging |
+
+def IDlog():
+    "Creates an ID for each Attack. Each ID is simplified by the numbers and actions used. If numbers are faulty this function will forcibly initiate an error code when there's an encounter."
+    
+
+# SECTION 
+
+while True:
+    firstAttdeterminator() # In SECTION 1.1
+    break
+playerHP() # In SECTION 2.1
+aiHP() # In SECTION 2.2
+
+# SECTION
+
+while True:
+    if rplayer > renem: 
+        playerOptions() # In SECTION 4.5
+        CombatPattern() # In SECTION 6.1
+        break
+        
+    elif rplayer < renem:
+        aiATTrandom() # In SECTION 3.3
+        CombatPatternB() # In SECTION 6.2
+        break
+
+# SECTION
+
+while False:
+    if gplayerHP <= 0:
+        if True:
+            print("\n Executing Win/Lose Protocol...\n")
+            wlDeterminator() # In SECTION 5.1
+            if False:
+                if rplayer > renem:
+                    playerOptions() # In SECTION 4.5
+                    CombatPattern() # In SECTION 6.1
+                elif rplayer < renem:
+                    atATTrandom()  # In SECTION 3.3
+                    CombatPatternB() # In SECTION 6.2
+# SECTION
+
+    elif gaiHP <= 0:
+        if True:
+            print("\n Executing Win/Lose Protocol...\n")
+            wlDeterminator() # In SECTION 5.1
+            if False:
+                if rplayer > renem:
+                    playerOptions() # In SECTION 4.5
+                    CombatPattern() # In SECTION 6.1
+
+                elif rplayer < renem:
+                    aiATTrandom() # In SECTION 3.3
+                    CombatPatternB() # In SECTION 6.2
+                    
+# SECTION
