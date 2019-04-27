@@ -1,3 +1,19 @@
+# Braxton A. Ferguson
+# (04-16-19)  Function for a Game / (04-19-19) Escape Room
+
+#def exampleFunction():
+#   "An Example to show use of global variables."
+#    global health
+#    health=health-5
+#    print(health)
+
+
+# /
+
+
+# Escape Room Example
+# PDF file on iCloud Drive
+
 import random
 
 # SECTION 1.1: Introduction to the PvC | Function firstAttdeterminator()
@@ -19,28 +35,33 @@ Whoever drops to 0 first on their health will lose the game. Let's get setup.
 """)
     for x in range(1):
         global renem
-        renem=random.randint(1,1) # MODIFIED TO FIX ISSUE
+        renem=random.randint(1,1) # MODIFIED TO FIX A REOCCURING ISSUE TO {SECTION 1.1, SECTION 1.1.0, SECTION 1.1.1, SECTION 1.1.2} TO HAVE SUCCESSFUL FUNCTIONS WITH FAILSAFE PROTOCOLS.
         while True:
             global rplayer
             rplayer=int(input())
-            if rplayer > 100:
-                False(failRoll())
+            # Cannot add MaxMinRolls() within this line.
+            if rplayer >= 100:
+                False(Retry()) # Cannot add MaxMinRolls() within this line to prevent negative integers. # Errors Occurred after False(Retry()) Attempted to Run. 
                 print("""
 That's above the Maximum number. Please try again. Choose a number between {1 and 100}
 """)
-            elif rplayer == renem: # MODIFIED
-                True(Retry()) # MODIFIED
+            elif rplayer == renem: # Successful
                 
-            elif rplayer < 100:
+                Retry() # Successful
+                break
+                
+            elif rplayer < 100: # Succesful
                 print("""
 Player=""",rplayer,"""Opponent=""",renem)
+
+                break
                 
-            if rplayer > renem:
+            if rplayer > renem: # Successful
                 print("""
 Player has won. Choose your first Option.
 """)
                 break
-            elif rplayer < renem:
+            elif rplayer < renem: # Successful
                 print("Opponent has won! They will now attack you!")
                 print()
                 break
@@ -56,8 +77,10 @@ def RollsEqual():
             print("You and your Opponent have chosen the same number. You will not be choosing again. If this happens again, this will repeat.")
             print()
             Retry()
+            break
         if rplayer > renem: # If Player roll is higher then the Opponent's, it will not trigger the Failsafe Functions. This is False and breaks the loop.
             True
+
             break
         elif rplayer < renem: # If Player roll is lower then the Opponent's, it will not trigger the Failsafe Function. This is False and breaks the loop.
             True
@@ -67,25 +90,34 @@ def RollsEqual():
 def Retry():
     "Executes another re-roll of the chosen numbers that Equal Automatically without allowing the Player to choose another number to quicken the Battle and Escape Room."
     print("""
-Re-Rolling Player and Opponent Scores...""")
+Re-Rolling Opponent Scores...
+
+Player please enter a new number. (Remember you can only roll between 1 - 100. You cannot go over 100 or below 0 into negatives.)""")
     print()
     for x in range(1):
-        rplayer=int(input())
-        renem=random.randint(1,100)
+        rplayer=int(input()) # Successful
+        renem=random.randint(1,100) # Successful
         while True:
+            
             if rplayer < 100:
                 print("""
 Player=""",rplayer,"""Opponent=""",renem)
+
+                break
             elif rplayer > renem:
                 print("""
 Player has won. Choose your first Option.
 """)
+                
                 print()
                 break
+
             elif rplayer < renem:
                 print("Opponent has won! They will now attack you!")
                 print()
+                
                 break
+            
 
 # SECTION 1.1.2: Introduction to the PvC | Function failRoll() | Failsafe | Attribute to firstAttdeterminator()
 
@@ -100,11 +132,38 @@ That's above the Maximum number. Please try again. Choose a number between {1 an
             break
         elif rplayer <= 0:
             print("""
-That's below the Minimum number. Please try again.
+That's below the Minimum number. Please try again. (Remember you can only roll between 1 - 100. You cannot go over 100 or below 0 into negatives.)
 """)
             firstAttdeterminator()
             break
+
+# SECTION 1.1.3: Introduction to the PvC | Function MaxMinRolls() | Failsafe | Attribute to firstAttdeterminator()
+
+
+def MaxMinRolls(): # Error Due to "Before Assignment" whenever put into an 'if rplayer >= 101: MaxMinRolls()' does not run properly to secure this Failsafe Method. Within Line 42 and/or Line 44 does not work within an False(MaxMinRolls()) to verify that it is false.
+    "Helps the Rolls from the Player to not exceed the Minimum which is,  '<= 0' or to not exceed the Maximum which is, '> 100'. The Program will force the Player to Re-Roll. The Rolls will not be shown if the Player goes over the Minimum/Maximum limit."  
+    while True:
+        if rplayer <= 0:
+            print("[INFO] Player Roll,",rplayer,"is Less than the Integer 0. Please try again. If this reoccurs you will be required to Re-Roll. (Remember you can only roll between 1 - 100. You cannot go over 100 or below 0 into negatives.)")
+            rplayer=int(input())
+        elif rplayer > 0:
+            print("[INFO] Player Roll,",rplayer,"is between 1 - 100. Executing Protocols.")
+            break
+        elif rplayer > 100:
+            print("[INFO] Player Roll,",rplayer,"is More than the Integer 100. Please try again. If this reoccurs you will be required to Re-Roll. (Remember you can only roll between 1 - 100. You cannot go over 100 or below 0 into negatives.)")
+            rplayer=int(input())
+        elif rplayer >= 101:
+            print("[INFO] Player Roll,",rplayer,"is More than the Integer 100. Please try again. If this reoccurs you will be required to Re-Roll. (Remember you can only roll between 1 - 100. You cannot go over 100 or below 0 into negatives.)")
+            rplayer=int(input())
+        elif rplayer < 100:
+            print("[INFO] Player Roll,",rplayer,"is between 1 - 100. Executing Protocols.")
+            break
             
+
+
+
+
+
 # SECTION 2.1: BattleField Setup Configurations - playerHP()
 
 def playerHP():
@@ -310,9 +369,11 @@ def HealthCondition():
     "A simplified Alternative for wlDeterminator(). Whenever the Opponent's or Player's Health has been reduced to 0 or below, the wlDeterminator() and HealthCondition() functions will execute."
 
     if gaiHP <= 0:
-        print("Opponent HP=",gaiHP,". Opponent has been defeated by Player! Player WINS the game! Congratulations Player! Player's HP=",gplayerHP)    
+        print("Opponent HP=",gaiHP,". Opponent has been defeated by Player! Player WINS the game! Congratulations Player! Player's HP=",gplayerHP)
+        exit(self)    
     elif gplayerHP <= 0:
         print("Player HP=",gplayerHP,". Player has been defeated! Player's opponent wins the game! Congratulations Opponent! Opponent's HP=",gaiHP)
+        exit(self, InterruptedError)
 
 # SECTION 5.2: Game Condition | Determines Player's or Opponent's First Turn to Attack - FirstStrike() 
 
@@ -359,34 +420,37 @@ def CombatPatternB():
     playerOptions()
     wlDeterminator()
 
-# SECTION 7.1: Game Logging |
+# SECTION 7.1: Game Logging | Incomplete 
 
 def IDlog():
     "Creates an ID for each Attack. Each ID is simplified by the numbers and actions used. If numbers are faulty this function will forcibly initiate an error code when there's an encounter."
     
 
-# SECTION 
+# SECTION 16.0.0: Game Interactive | Beginning Program Startup - ERROR: Line 407, SECTION_TRANSITION_FAILURE |  N/A 
 
-while True:
+while True: 
     firstAttdeterminator() # In SECTION 1.1
     break
 playerHP() # In SECTION 2.1
 aiHP() # In SECTION 2.2
 
-# SECTION
+# SECTION 16.0.1: Game Interactive | Program Initial Startup | Combat - ERROR: Before Assignment could continue 'Line 407' fails due to function_firstAttdeterminator() within 'While True:' loop. (This is a potential and observed guess.)
 
 while True:
-    if rplayer > renem: 
+    if rplayer > renem:
+        
         playerOptions() # In SECTION 4.5
         CombatPattern() # In SECTION 6.1
+        
         break
         
     elif rplayer < renem:
+        
         aiATTrandom() # In SECTION 3.3
         CombatPatternB() # In SECTION 6.2
         break
 
-# SECTION
+# SECTION 16.0.2: Game Interactive | Program Interactive | Combat / Win_Lose_Determinator 
 
 while False:
     if gplayerHP <= 0:
@@ -400,7 +464,8 @@ while False:
                 elif rplayer < renem:
                     atATTrandom()  # In SECTION 3.3
                     CombatPatternB() # In SECTION 6.2
-# SECTION
+
+# SECTION 16.0.3: Game Interactive | Program Interactive | Combat / Win_Lose_Determinator
 
     elif gaiHP <= 0:
         if True:
@@ -415,4 +480,4 @@ while False:
                     aiATTrandom() # In SECTION 3.3
                     CombatPatternB() # In SECTION 6.2
                     
-# SECTION
+# SECTION 16.0.4: Game Interactive | Program Interactive | Combat / Win_Lose_Determinator
